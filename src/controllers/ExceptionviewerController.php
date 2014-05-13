@@ -1,5 +1,5 @@
 <?php
-class ExceptionViewerController extends BaseController {
+class ExceptionviewerController extends BaseController {
 	public function show($id)
 	{
 		$errors = DB::select('select * from log where id = ' . $id);

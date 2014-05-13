@@ -21,7 +21,7 @@ class ExceptionviewerServiceProvider extends ServiceProvider {
 		$this->package('perfekteriksson/Exceptionviewer');
 
 		include __DIR__.'/../../routes.php';
-		include __DIR__.'/../../controllers/ExceptionViewerController.php';
+		include __DIR__.'/../../controllers/ExceptionviewerController.php';
 
 		$view = $this->app->make("View")->getFacadeRoot();
 		$view->addNamespace('Perfekteriksson/Exceptionviewer', __DIR__.'/../../views');
