@@ -23,4 +23,8 @@ To install this package:
 
 4. Register the service provider in app/config/app.php: `Perfekteriksson\Exceptionviewer\ExceptionviewerServiceProvider`.
 
-5. That's it!
+5. That's it! Visit /exceptions to view all errors.
+
+TODO
+===============
+* Add support for authentication
