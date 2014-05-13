@@ -77,10 +77,8 @@
 					<tr>
 						<td>{{$key}}</td>
 						<td>
-							@if(is_array($value) && !empty($value))
+							@if(is_array($value)
 								<pre><?php print_r($value); ?></pre>
-							@elseif(empty($value))
-								<span>{{$value}}</span>
 							@else
 								{{$value}}
 							@endif
