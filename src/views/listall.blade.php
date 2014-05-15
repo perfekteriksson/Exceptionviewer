@@ -1,6 +1,21 @@
+<?php
+function remove_namespace($type) {
+	$strr = strrchr($type, '\\');
+	if(empty($strr)) {
+		return $type;
+	}
+	return substr($strr, 1);
+}
+
+function get_path($error) {
+	$context = json_decode($error->context, true);
+	return $context['REQUEST_URI'];
+}
+?>
 <!doctype html>
 <html>
 	<head>
+		<meta name="robots" content="noindex,nofollow" />
 		<style type="text/css">
 			body { 
 			    font-size: 75%;
@@ -62,23 +77,33 @@
 			<thead>
 				<tr>
 					<th>Type</th>
+					<th>URL</th>
 					<th>Error</th>
 					<th>User</th>
 					<th>Date</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($errors as $error): ?>
+				@foreach($errors as $error)
 					<tr>
-						<td><?php echo $error->type; ?></td>
 						<td>
-							<?php echo $error->message; ?>.
-							<a href="/exceptions/<?php echo $error->id; ?>">Details</a>
+							<span title="{{ $error->type }}">
+								{{ remove_namespace($error->type) }}
+							</span>
 						</td>
-						<td><?php echo $error->user; ?></td>
-						<td><?php echo $error->datetime; ?></td>
+						<td>
+							{{ get_path($error )}}
+						</td>
+						<td>
+							{{ $error->message }}
+							<a href="/exceptions/{{ $error->id }}">Details</a>
+						</td>
+						<td>{{ $error->user }}</td>
+						<td>{{ $error->datetime }}</td>
+						<td><a href="/exceptions/delete/{{ $error->id }}">Delete</a></td>
 					</tr>
-				<?php endforeach; ?>
+				@endforeach
 			</tbody>
 		</table>
 

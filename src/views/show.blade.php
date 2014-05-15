@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+		<meta name="robots" content="noindex, nofollow" />
 		<style type="text/css">
 			body { 
 			    font-size: 75%;
@@ -78,7 +79,7 @@
 						<td>{{$key}}</td>
 						<td>
 							@if(is_array($value)
-								<pre><?php print_r($value); ?></pre>
+								<pre>{{ print_r($value, true) }} ?></pre>
 							@else
 								{{$value}}
 							@endif
