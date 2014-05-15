@@ -78,7 +78,7 @@
 					<tr>
 						<td>{{$key}}</td>
 						<td>
-							@if(is_array($value)
+							@if(is_array($value))
 								<pre>{{ print_r($value, true) }} ?></pre>
 							@else
 								{{$value}}
