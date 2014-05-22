@@ -31,36 +31,40 @@ class ExceptionviewerServiceProvider extends ServiceProvider {
 		$db = $this->app->make("DB")->getFacadeRoot();
 		$request = $this->app->make("Request")->getFacadeRoot();
 
-		$log->listen(function($level, $exception, $context) use($auth, $db, $request) {
-		    $user = $auth->getUser();
-		    if($user !== null) {
-		        $user = $user->email;
-		    } else {
-		        $user = 'Guest';
-		    }
+		if(isset($_server['REQUEST_METHOD']))
+		{
 
-		    $context = $_SERVER;
-		    if($context['REQUEST_METHOD'] === 'POST') {
-		        $context['FORM'] = $_POST;
-		    } else {
-		        $context['FORM'] = array();
-		    }
+			$log->listen(function($level, $exception, $context) use($auth, $db, $request) {
+			    $user = $auth->getUser();
+			    if($user !== null) {
+			        $user = $user->email;
+			    } else {
+			        $user = 'Guest';
+			    }
 
-		    $db->table("log")->insert(
-		        array(
-		            'url' => $request->url(),
-		            'file' => $exception->getFile(),
-		            'line' => $exception->getLine(),
-		            'message' => $exception->getMessage(),
-		            'level' => $level,
-		            'stacktrace' => $exception->getTraceAsString(),
-		            'user' => $user,
-		            'type' => get_class($exception),
-		            'context' => json_encode($context),
-		            'datetime' => date('Y-m-d H:i:s')
-		        )
-		    );
-		});
+			    $context = $_SERVER;
+			    if($context['REQUEST_METHOD'] === 'POST') {
+			        $context['FORM'] = $_POST;
+			    } else {
+			        $context['FORM'] = array();
+			    }
+
+			    $db->table("log")->insert(
+			        array(
+			            'url' => $request->url(),
+			            'file' => $exception->getFile(),
+			            'line' => $exception->getLine(),
+			            'message' => $exception->getMessage(),
+			            'level' => $level,
+			            'stacktrace' => $exception->getTraceAsString(),
+			            'user' => $user,
+			            'type' => get_class($exception),
+			            'context' => json_encode($context),
+			            'datetime' => date('Y-m-d H:i:s')
+			        )
+			    );
+			});
+		}
 	}
 
 	/**
