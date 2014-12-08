@@ -31,7 +31,7 @@ class ExceptionviewerServiceProvider extends ServiceProvider {
 		$db = $this->app->make("DB")->getFacadeRoot();
 		$request = $this->app->make("Request")->getFacadeRoot();
 
-		if(isset($_server['REQUEST_METHOD']))
+		if(isset($_SERVER['REQUEST_METHOD']))
 		{
 
 			$log->listen(function($level, $exception, $context) use($auth, $db, $request) {
